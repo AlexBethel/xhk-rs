@@ -1,5 +1,5 @@
 [package]
-name = "xhk-rs"
+name = "rhk"
 version = "0.1.0"
 authors = ["Alexander Bethel <abethel@cs.nmt.edu>"]
 edition = "2018"

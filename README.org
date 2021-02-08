@@ -1,10 +1,10 @@
-* xhk-rs (ROUGH DRAFT README)
+* rhk (ROUGH DRAFT README)
 
   *This project is currently in the initial planning phase; do not
   expect usable builds or releases for some time.*
 
-  xhk-rs is an extremely minimal and generic hotkey daemon for X11 and
-  Wayland. Unlike most similar hotkey programs, xhk-rs has no
+  rhk is an extremely minimal and generic hotkey daemon for X11 and
+  Wayland. Unlike most similar hotkey programs, rhk has no
   configuration file, and operates solely based on command-line
   options.
 
@@ -16,16 +16,18 @@
    either "+" or "-". An example of a key binding is "Control+x y
    Shift+z" meaning press control-X, then press, Y, then press
    shift-Z; we can abbreviate this as "C-x y Z".
-   # FIXME: As things stand, we actually can't, although it would be
-   # pretty nice.
+
+   FIXME: As things stand, we actually can't, although it would be
+   pretty nice.
 
 *** Key names
 
     In addition to all of the standard X11 key names (i.e., those
     output from ~xev~), the following key names are recognized:
-    # FIXME: These clash with letter names. Perhaps differentiate
-    # between + and - for combining keys, and only let modifiers exist
-    # before -?
+
+    FIXME: These clash with letter names. Perhaps differentiate
+    between + and - for combining keys, and only let modifiers exist
+    before -?
     - C: alias for Control.
     - M: alias for Alt.
     - S: alias for Shift.
@@ -37,18 +39,18 @@
 
 ** Program usage
 
-   In general, xhk-rs spawns only one master process when it is first
+   In general, rhk spawns only one master process when it is first
    invoked on a particular display; subsequent invocations on the same
    display just communicate with this master process using a UNIX
    socket rather than spawning their own processes (although to the
    user there is no immediately obvious difference). There are several
-   different types of keybindings supported by xhk-rs, as documented
+   different types of keybindings supported by rhk, as documented
    below.
 
 *** Shell command keybindings
 
     #+BEGIN_EXAMPLE
-    xhk-rs <keybinding> <command ...>
+    rhk <keybinding> <command ...>
     #+END_EXAMPLE
 
     The simplest and default type of binding, this creates a hotkey
@@ -59,13 +61,13 @@
 *** Substitution keybindings
 
     #+BEGIN_EXAMPLE
-    xhk-rs <keybinding> -s <keybinding>
+    rhk <keybinding> -s <keybinding>
     #+END_EXAMPLE
 
     Substitution bindings are used to make programs see one key
     sequence as another. For example, you might use
     #+BEGIN_EXAMPLE
-    xhk-rs 'C-f' -s 'right'
+    rhk 'C-f' -s 'right'
     #+END_EXAMPLE
     to make ~control-f~ function as a right arrow key. These bindings
     synchronize both the "key down" and "key up" events, so repeating
@@ -74,7 +76,7 @@
 *** stdout keybindings
 
     #+BEGIN_EXAMPLE
-    xhk-rs <keybinding>
+    rhk <keybinding>
     #+END_EXAMPLE
 
     stdout keybindings are a lower-level type of keybinding than the
@@ -87,8 +89,8 @@
 *** Disabling keybindings
 
     #+BEGIN_EXAMPLE
-    xhk-rs -d <keybinding>
-    xhk-rs -d --all
+    rhk -d <keybinding>
+    rhk -d --all
     #+END_EXAMPLE
 
     A keybinding that has been previously set can be disabled using
