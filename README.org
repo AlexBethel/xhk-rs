@@ -1,4 +1,4 @@
-* rhk (ROUGH DRAFT README)
+* rhk
 
   *This project is currently in the initial planning phase; do not
   expect usable builds or releases for some time.*
@@ -11,31 +11,32 @@
 ** Specifying key bindings
 
    Key bindings are specified as space-separated sequences of "key
-   chords", which are sets of one or more keys that must be pressed at
-   once. A key chord is written as one or more keys, separated by
-   either "+" or "-". An example of a key binding is "Control+x y
-   Shift+z" meaning press control-X, then press, Y, then press
-   shift-Z; we can abbreviate this as "C-x y Z".
+   chords", which are set of optionally one or more modifiers
+   (control, shift, meta, alt, super) followed by a key (which must
+   come last). Modifiers and keys can be separated by either hyphens
+   or plus symbols.
 
-   FIXME: As things stand, we actually can't, although it would be
-   pretty nice.
+*** Modifier names
+
+    The following modifier keys and aliases thereof are recognized:
+    - Control, Ctrl, C.
+    - Alt, Meta, A.
+    - Shift, S.
+    - Super, Windows, Command, s.
+    - Hyper, h.
+    Single-letter names are case-sensitive (to make shift and super
+    distinguishable), but the other names are not.
 
 *** Key names
 
-    In addition to all of the standard X11 key names (i.e., those
-    output from ~xev~), the following key names are recognized:
-
-    FIXME: These clash with letter names. Perhaps differentiate
-    between + and - for combining keys, and only let modifiers exist
-    before -?
-    - C: alias for Control.
-    - M: alias for Alt.
-    - S: alias for Shift.
-    - s: alias for Super.
-    - "<symbol>" (with the quotes): the standard key binding for any
-      symbol; e.g., "+" (with the quotes) is the same as Shift-Equals.
-      This notation can be used to index all the lower- and upper-case
-      letters and any of the other symbols on the system keyboard.
+    The valid names for keys (other than modifiers) are:
+    - Standard X11 keysyms as output by ~xev~, like 'a', 'Right',
+      'bracketleft'.
+    - Capital letters, which are shorthand for shifted variants of
+      normal letters. For example, 'Q' is equivalent to 'Shift+q'.
+    - Any symbols that can be typed on the host's keyboard layout,
+      including shifted variants. For example, on my en_US keyboard,
+      'C-{' is equivalent to 'Control+Shift+bracketleft'.
 
 ** Program usage
 
@@ -43,14 +44,15 @@
    invoked on a particular display; subsequent invocations on the same
    display just communicate with this master process using a UNIX
    socket rather than spawning their own processes (although to the
-   user there is no immediately obvious difference). There are several
-   different types of keybindings supported by rhk, as documented
-   below.
+   user there is no immediately obvious difference).
+
+   There are several different subcommands supported by rhk, each of
+   which corresponds to a different type of keybinding.
 
 *** Shell command keybindings
 
     #+BEGIN_EXAMPLE
-    rhk <keybinding> <command ...>
+    rhk command <keybinding> <command ...>
     #+END_EXAMPLE
 
     The simplest and default type of binding, this creates a hotkey
@@ -58,41 +60,47 @@
     immediately returns, either by forking into the background or by
     communicating with an already-running instance for this display.
 
-*** Substitution keybindings
+*** Re-mapping keybindings
 
     #+BEGIN_EXAMPLE
-    rhk <keybinding> -s <keybinding>
+    rhk map <keybinding> -s <keybinding>
     #+END_EXAMPLE
 
-    Substitution bindings are used to make programs see one key
-    sequence as another. For example, you might use
+    Re-mapping bindings are used to make programs see one key sequence
+    as another. For example, you might use
     #+BEGIN_EXAMPLE
     rhk 'C-f' -s 'right'
     #+END_EXAMPLE
-    to make ~control-f~ function as a right arrow key. These bindings
-    synchronize both the "key down" and "key up" events, so repeating
-    keys should work naturally.
+    to make ~control-f~ function as a right arrow key. Whenever the
+    user depresses ~f~ while holding ~control~, ~rhk~ sends a key-down
+    event for the right arrow key to the selected applicaiton; when
+    the user releases either ~control~ or ~f~, ~rhk~ sends a key-up
+    event.
 
-*** stdout keybindings
+    Similar to ~rhk command~, this invocation does not block.
+
+*** Listening keybindings
 
     #+BEGIN_EXAMPLE
-    rhk <keybinding>
+    rhk listen <keybinding>
     #+END_EXAMPLE
 
-    stdout keybindings are a lower-level type of keybinding than the
-    other types. Rather than forking into the background, this
+    Listening keybindings are a lower-level type of keybinding than
+    the other types. Rather than forking into the background, this
     invocation blocks and prints out status messages when the
     keybinding is pressed and released. Specifically, it prints out
     the word "DOWN" when the key is pressed, and "UP" when it is
-    released, each message on its own line.
+    released, each message on its own line. These messages can then be
+    used by scripts to perform dynamic actions when the key is pressed
+    and released.
 
-*** Disabling keybindings
+*** Removing keybindings
 
     #+BEGIN_EXAMPLE
-    rhk -d <keybinding>
-    rhk -d --all
+    rhk unbind <keybinding>
+    rhk unbind_all
     #+END_EXAMPLE
 
     A keybinding that has been previously set can be disabled using
-    this command, or ~--all~ can be passed to disable all enabled
-    keybindings.
+    this command, or ~unbind_all~ can be passed to disable all enabled
+    keybindings and kill all ~listen~ sessions.
