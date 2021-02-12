@@ -8,6 +8,18 @@
   configuration file, and operates solely based on command-line
   options.
 
+** Project state
+
+   - [ ] Key name parsing
+   - [ ] Transparent server-client model
+   - [ ] X11 event listening
+   - [ ] X11 event synthesis
+   - [ ] Subcommands
+     - [ ] ~command~
+     - [ ] ~map~
+     - [ ] ~listen~
+     - [ ] ~unbind~
+
 ** Specifying key bindings
 
    Key bindings are specified as space-separated sequences of "key
@@ -73,7 +85,7 @@
     #+END_EXAMPLE
     to make ~control-f~ function as a right arrow key. Whenever the
     user depresses ~f~ while holding ~control~, ~rhk~ sends a key-down
-    event for the right arrow key to the selected applicaiton; when
+    event for the right arrow key to the selected application; when
     the user releases either ~control~ or ~f~, ~rhk~ sends a key-up
     event.
 
