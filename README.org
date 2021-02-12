@@ -63,13 +63,13 @@
 *** Re-mapping keybindings
 
     #+BEGIN_EXAMPLE
-    rhk map <keybinding> -s <keybinding>
+    rhk map <keybinding_1> <keybinding_2>
     #+END_EXAMPLE
 
     Re-mapping bindings are used to make programs see one key sequence
     as another. For example, you might use
     #+BEGIN_EXAMPLE
-    rhk 'C-f' -s 'right'
+    rhk map 'C-f' 'right'
     #+END_EXAMPLE
     to make ~control-f~ function as a right arrow key. Whenever the
     user depresses ~f~ while holding ~control~, ~rhk~ sends a key-down
