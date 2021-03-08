@@ -1,7 +1,15 @@
-* rhk
+*This project is currently in the initial planning phase; do not
+expect usable builds or releases for some time.*
 
-  *This project is currently in the initial planning phase; do not
-  expect usable builds or releases for some time.*
+Unfortunately, this semester I have had almost no spare time; I
+estimate that at least 90% of my average day (including weekends) is
+spent either in class or working on homework. As such, I just plain
+don't have time to do development on the side, so this project is
+stalled for now. It's more than possible that I'll somehow be able
+to find the time to push out a prototype within the next few months,
+but I can't come close to making any guarantees.
+
+* rhk
 
   rhk is an extremely minimal and generic hotkey daemon for X11 and
   Wayland. Unlike most similar hotkey programs, rhk has no
